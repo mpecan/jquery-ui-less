@@ -1,7 +1,7 @@
 var fs = require('fs')
 	, async = require('async')
 	, target = 'less/'
-	, source = 'components/jquery.ui/themes/base/'
+	, source = 'bower_components/jquery.ui/themes/base/'
 	, variables = {}
 	, queue
 	;
@@ -38,8 +38,7 @@ queue = async.queue(function (info, callback) {
 			fs.readFile(path, {
 				encoding: "utf-8"
 			}, function (err, data) {
-				var replaced = data
-					.replace(/([^\s]+)\/\*\{(\w+)\}\*\//g, function (whole, value, key) {
+				var replaced = String(data).replace(/([^\s]+)\/\*\{(\w+)\}\*\//g, function (whole, value, key) {
 						key = "ui_" + key;
 						variables[key] = value;
 						return "@" + key;
